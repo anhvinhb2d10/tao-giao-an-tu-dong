@@ -122,6 +122,8 @@ function ApDungGhiChu([string]$s) {
     foreach ($pair in $cfg.thayTheGhiChu) { $s = $s.Replace((N $pair[0]), (N $pair[1])) }
     return $s
 }
+# File tải từ mạng / Zalo / email bị Windows đánh dấu "chặn", Word sẽ mở ở chế độ bảo vệ và công cụ không đọc được -> gỡ dấu chặn trước
+function Go-Chan([string]$p) { try { Unblock-File -LiteralPath $p -ErrorAction Stop } catch {} }
 function Path-Of([string]$rel) { return Join-Path $cfg.thuMucGoc ($rel -replace '/', '\') }
 
 # ---------- Ngày tháng ----------
@@ -164,6 +166,7 @@ try {
     # =================================================================
     Info "1. Đọc kế hoạch dạy học khối..."
     $khPath = Path-Of $cfg.fileKeHoachKhoi
+    Go-Chan $khPath
     $kh = $word.Documents.Open($khPath, $false, $true)
     [void]$openDocs.Add($kh)
 
@@ -321,6 +324,7 @@ try {
         $entry = $null
         if (Test-Path -LiteralPath $path) {
             Write-Host "   - mở $([IO.Path]::GetFileName($path))"
+            Go-Chan $path
             $sd = $word.Documents.Open($path, $false, $true)
             [void]$openDocs.Add($sd)
             $entry = [pscustomobject]@{ Path = $path; Doc = $sd; Blocks = (Get-Blocks $sd) }
@@ -449,6 +453,7 @@ try {
         }
     }
     Copy-Item -LiteralPath (Path-Of $cfg.fileMauKhung) -Destination $outPath -Force
+    Go-Chan $outPath
     $doc = $word.Documents.Open($outPath)
     [void]$openDocs.Add($doc)
 
@@ -480,8 +485,66 @@ try {
 
     # Bảng thời khoá biểu
     $t1 = $doc.Tables.Item(1)
-    if ($t1.Rows.Count - 1 -ne $slots.Count) {
-        throw "Mẫu khung có $($t1.Rows.Count - 1) dòng tiết nhưng thoiKhoaBieu có $($slots.Count) tiết. Hãy sửa mẫu MAU_KHUNG.docx cho khớp."
+    if ($t1.Columns.Count -lt 7) { throw "Bảng thời khoá biểu trong mẫu khung phải có 7 cột (Thứ ngày, Buổi, Tiết, PPCT, Môn, Tên bài dạy, Ghi chú)." }
+    # Bảng trong mẫu khung có khớp thoiKhoaBieu không? (số tiết, chỗ bắt đầu mỗi thứ / mỗi buổi)
+    $dauThu = @(); $dauBuoi = @()
+    for ($i = 0; $i -lt $slots.Count; $i++) {
+        $dauThu += ($i -eq 0 -or $slots[$i].Thu -ne $slots[$i - 1].Thu)
+        $dauBuoi += ($dauThu[$i] -or $slots[$i].Buoi -ne $slots[$i - 1].Buoi)
+    }
+    $khop = ($t1.Rows.Count - 1 -eq $slots.Count)
+    if ($khop) {
+        $coO = @{}
+        foreach ($c in $t1.Range.Cells) { if ($c.ColumnIndex -le 2 -and $c.RowIndex -ge 2) { $coO["$($c.RowIndex),$($c.ColumnIndex)"] = CleanText $c.Range.Text } }
+        for ($i = 0; $i -lt $slots.Count -and $khop; $i++) {
+            $r = $i + 2
+            if ($coO.ContainsKey("$r,1") -ne $dauThu[$i] -or $coO.ContainsKey("$r,2") -ne $dauBuoi[$i]) { $khop = $false }
+            elseif ($dauThu[$i] -and -not $coO["$r,1"].StartsWith($slots[$i].Thu, [StringComparison]::Ordinal)) { $khop = $false }
+            elseif ($dauBuoi[$i] -and $coO["$r,2"] -cne $slots[$i].Buoi) { $khop = $false }
+        }
+    }
+    if (-not $khop) {
+        # Dựng lại các dòng của bảng theo thoiKhoaBieu (lớp khác, lịch khác vẫn dùng chung một mẫu khung)
+        Write-Host "   (dựng lại bảng thời khoá biểu theo cấu hình: $($slots.Count) tiết)"
+        $fmt = @{}
+        $macDinh = @{ 1 = @(1, -1); 2 = @(1, -1); 3 = @(1, 0); 4 = @(1, 0); 5 = @(1, 0); 6 = @(3, 0); 7 = @(1, 0) }
+        for ($c = 1; $c -le 7; $c++) {
+            $fmt[$c] = @{ A = $macDinh[$c][0]; B = $macDinh[$c][1]; V = 1; I = 0 }
+            try { $x = $t1.Cell(2, $c); $fmt[$c] = @{ A = $x.Range.ParagraphFormat.Alignment; B = $x.Range.Font.Bold; V = $x.VerticalAlignment; I = $(if ($x.Range.Font.Italic -eq -1) { -1 } else { 0 }) } } catch {}
+        }
+        # Chiều cao dòng lấy theo dòng tiết đầu tiên của mẫu (dòng tiêu đề thường cao hơn)
+        $caoKieu = 0; $cao = 0.0
+        try { $caoKieu = [int]$t1.Cell(2, 3).HeightRule; $cao = [double]$t1.Cell(2, 3).Height } catch {}
+        if ($t1.Rows.Count -gt 1) { $doc.Range($t1.Cell(2, 1).Range.Start, $t1.Range.End).Cells.Delete(2) }
+        for ($i = 0; $i -lt $slots.Count; $i++) {
+            $dongMoi = $t1.Rows.Add()
+            try {
+                if ($caoKieu -ne 0 -and $cao -gt 0 -and $cao -lt 1000) { $dongMoi.HeightRule = $caoKieu; $dongMoi.Height = [single]$cao } else { $dongMoi.HeightRule = 0 }
+                $dongMoi.HeadingFormat = 0
+            } catch {}
+        }
+        $tiet = 0
+        for ($i = 0; $i -lt $slots.Count; $i++) {
+            $r = $i + 2
+            if ($dauThu[$i]) { $tiet = 0 }; $tiet++
+            for ($c = 1; $c -le 7; $c++) {
+                $x = $t1.Cell($r, $c); $x.Range.Text = ''
+                $x.Range.Font.Bold = $fmt[$c].B; $x.Range.Font.Italic = $fmt[$c].I; $x.Range.Font.Color = -16777216; $x.Range.ParagraphFormat.Alignment = $fmt[$c].A; $x.VerticalAlignment = $fmt[$c].V
+            }
+            $t1.Cell($r, 3).Range.Text = "$tiet"
+        }
+        # Gộp ô từ dưới lên (cột Buổi trước, rồi cột Thứ) để số dòng không bị xê dịch
+        foreach ($cot in 2, 1) {
+            $dau = if ($cot -eq 2) { $dauBuoi } else { $dauThu }
+            $cuoi = $slots.Count - 1
+            for ($i = $slots.Count - 1; $i -ge 0; $i--) {
+                if (-not $dau[$i]) { continue }
+                if ($cuoi -gt $i) { $t1.Cell($i + 2, $cot).Merge($t1.Cell($cuoi + 2, $cot)) }
+                $chu = if ($cot -eq 2) { $slots[$i].Buoi } else { "$($slots[$i].Thu) 00/00" }
+                $t1.Cell($i + 2, $cot).Range.Text = $chu
+                $cuoi = $i - 1
+            }
+        }
     }
     $prevThu = $null
     for ($i = 0; $i -lt $slots.Count; $i++) {

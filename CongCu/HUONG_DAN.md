@@ -1,6 +1,35 @@
-# Công cụ soạn giáo án tuần tự động – Lớp 2C
+# Công cụ soạn giáo án tuần tự động
 
-## Cách dùng hằng tuần
+## Cách dùng hằng tuần (bằng cửa sổ)
+
+1. Mở thư mục `CongCu`, **bấm đúp** vào file `MO CUA SO.bat`. Một cửa sổ "Soạn giáo án tuần tự động" hiện ra.
+2. **Chọn tuần.** Cửa sổ tự gợi ý tuần sắp dạy và ghi rõ từ ngày nào đến ngày nào để cô đối chiếu.
+3. **Nếu tuần đó có ngày nghỉ:** chọn ngày ở ô "Chọn ngày" rồi bấm "Nghỉ ngày này" (hoặc "Nghỉ cả tuần này" khi nghỉ Tết). Ngày nghỉ được lưu lại cho các lần sau; muốn bỏ thì chọn dòng đó và bấm "Xoá dòng đang chọn".
+4. Bấm **TẠO GIÁO ÁN** và đợi khoảng 1 phút. Trong lúc chờ đừng mở file Word.
+5. Đọc khung **"Lưu ý cần kiểm tra"**, rồi bấm **"Mở giáo án vừa tạo"** để sửa những phần lặt vặt như thường lệ. Sửa xong thì đổi tên file và nộp.
+
+Nếu file giáo án của tuần đó đã có, cửa sổ sẽ hỏi trước khi ghi đè. Nếu cửa sổ không hiện lên, vẫn dùng được cách cũ bên dưới.
+
+## Khi thời khoá biểu thay đổi
+
+Trong cửa sổ, bấm **"Thiết lập lớp"**:
+
+- **Thời khoá biểu:** bấm vào từng ô rồi chọn môn; ô không có tiết thì để trống. Dòng chữ bên dưới đếm số tiết từng môn so với chương trình (ví dụ "Toán 5/5") để cô biết đã xếp đủ chưa.
+- **Thứ Hai của tuần 1:** đổi khi sang năm học mới.
+- **Sửa khung mẫu:** mở file khung trong Word để sửa tên trường, tên lớp, tên người ký.
+
+Bấm **Lưu** là xong. Bảng thời khoá biểu trong giáo án tự dựng lại theo lịch mới, không cần sửa bảng trong khung mẫu.
+
+## Gửi công cụ cho người khác
+
+**Bấm đúp** `DONG GOI.bat`. Công cụ tạo file `SoanGiaoAn-<ngày>.zip` trong thư mục `GoiGui` (cạnh `CongCu`). Gửi file zip đó qua Zalo, email hoặc USB.
+
+- Gói **không chứa** giáo án, file môn học, kế hoạch khối.
+- Khung mẫu trong gói đã được **xoá tên trường, tên lớp, tên người ký**; ngày nghỉ riêng của cô cũng được bỏ. Cuối lúc đóng gói, công cụ tự soát lại và báo đỏ nếu còn sót.
+- Trong gói có file `BAT DAU - DOC TRUOC.txt` hướng dẫn người nhận cài đặt và thiết lập lớp của họ.
+- Người nhận cần Windows có Word, và bộ giáo án nguồn trình bày cùng kiểu với của cô. Cấu hình sẵn cho khối 2.
+
+## Cách dùng hằng tuần (cách cũ, màn hình đen)
 
 1. Mở thư mục `CongCu`, **bấm đúp** vào file `TAO GIAO AN.bat`.
 2. Gõ số tuần (ví dụ `11`) rồi nhấn Enter.
@@ -48,7 +77,7 @@ Chép **cả thư mục** `Giáo án lớp 2C` (gồm `CongCu`, `LỚP 2` và fi
 - **Các dòng cần cảnh báo** → `"tuKhoaCanhBao"`: sau khi dán bài, dòng nào bắt đầu bằng các mẫu này sẽ được ghi vào file lưu ý.
 - **Một môn chuyển sang tự soạn** (ví dụ Đạo đức) → đổi `"cheDo": "gvbm"` thành `"cheDo": "soan"`.
   Các chế độ: `soan` = dán nội dung bài; `gvbm` = ghi "Giáo viên bộ môn soạn giảng"; `tieuDe` = chỉ ghi tên bài.
-- **Chữ đậm ở đầu trang**: `"chuInDamDauTrang"` liệt kê các chữ được in đậm ở phần đầu giáo án (mặc định: "CỘNG HÒA XÃ HỘI CHỦ NGHĨA…", "Lớp 2C", "Độc lập – Tự do – Hạnh phúc"). Mỗi chữ được in đậm từ chỗ đó đến dấu tab hoặc hết dòng. Muốn in đậm thêm (VD tên trường) thì thêm vào danh sách; để `[]` nếu không muốn.
+- **Chữ đậm ở đầu trang**: `"chuInDamDauTrang"` liệt kê các chữ được in đậm ở phần đầu giáo án (mặc định: "CỘNG HÒA XÃ HỘI CHỦ NGHĨA…", dòng tên lớp, "Độc lập – Tự do – Hạnh phúc"). Mỗi chữ được in đậm từ chỗ đó đến dấu tab hoặc hết dòng. Muốn in đậm thêm (VD tên trường) thì thêm vào danh sách; để `[]` nếu không muốn.
 - **Căn lề nội dung**: mặc định `"canDeuHaiBen": true` – mọi đoạn căn trái trong bài dán vào sẽ được căn đều hai bên (Justify), đoạn căn giữa giữ nguyên. Đổi thành `false` nếu muốn giữ nguyên như file môn.
 - **Ký hiệu giữa dòng ngăn cách** (`---☙📖❧---`): mục `"kyHieuNganCach"`, mỗi phần tử là `"mã|phông"`. Đổi chiều hoa văn thì đảo `2619` và `2767`; muốn bỏ ký hiệu (giữ "(((") thì để `[]`.
 - **Bật/tắt từng bước chuẩn hoá** (`true` = bật, `false` = tắt): `chuanHoaNoiDung` (sửa mục I, II, bảng hoạt động), `boTongKetTuan`, `bangRongToanTrang`, `chuKyCuoiGiaoAn`, `soDongDieuChinh` (số dòng kẻ chấm, 0 = giữ nguyên).
@@ -97,9 +126,11 @@ Chỉ thư mục `CongCu` được đưa lên. Giáo án, thư mục `LỚP 2` v
 
 ## Các file trong thư mục CongCu
 
-- `TAO GIAO AN.bat` – bấm đúp để chạy
+- `MO CUA SO.bat`, `giao_dien.ps1` – cửa sổ để chọn tuần, thêm ngày nghỉ và tạo giáo án
+- `TAO GIAO AN.bat` – cách cũ: bấm đúp để chạy trong màn hình đen
 - `LUU LEN GITHUB.bat` – bấm đúp để lưu thay đổi của công cụ lên GitHub
 - `KIEM TRA.bat`, `kiem_tra.ps1` – kiểm tra công cụ sau khi sửa
+- `DONG GOI.bat`, `dong_goi.ps1` – đóng gói công cụ thành file zip để gửi người khác
 - `tao_giao_an.ps1` – chương trình chính (cần có Microsoft Word trên máy)
 - `cauhinh.json` – thời khoá biểu và các thiết lập
 - `MAU_KHUNG.docx` – khung đầu giáo án (quốc hiệu, bảng TKB, chữ ký, lề trang), tạo từ file Tuần 11 của cô
