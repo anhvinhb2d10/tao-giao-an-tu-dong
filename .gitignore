@@ -1,0 +1,9 @@
+# Chỉ quản lý thư mục CongCu (công cụ). Giáo án, file môn học và kế hoạch khối chỉ để trên máy.
+/*
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/CongCu/
+
+# File tạm của Word khi đang mở
+~$*

@@ -1,0 +1,109 @@
+{
+  "_ghiChu": "File cấu hình công cụ soạn giáo án tự động. Sửa bằng Notepad, giữ nguyên dấu ngoặc kép và dấu phẩy.",
+
+  "thuMucGoc": "",
+  "fileKeHoachKhoi": "KẾ HOẠCH DẠY HỌC KHỐI 2 MỚI.docx",
+  "fileMauKhung": "CongCu\\MAU_KHUNG.docx",
+  "tenFileKetQua": "TUẦN {0} - TỰ ĐỘNG.docx",
+
+  "ngayThuHaiTuan1": "2026-09-07",
+  "_ghiChuNghi": "tuanNghi: thứ Hai của các tuần nghỉ hẳn (Tết...), VD [\"2027-02-01\", \"2027-02-08\"]. ngayNghi: các ngày nghỉ lẻ, VD [\"2027-04-30\"]. Dạng năm-tháng-ngày.",
+  "tuanNghi": [],
+  "ngayNghi": [],
+
+  "chuInDamDauTrang": ["CỘNG HÒA XÃ HỘI CHỦ NGHĨA", "Lớp 2C", "Độc lập – Tự do – Hạnh phúc"],
+
+  "canDeuHaiBen": true,
+  "chuDen": true,
+  "coChu": 13,
+  "soDongDieuChinh": 2,
+  "tieuDeMucIV": "IV. ĐIỀU CHỈNH SAU BÀI DẠY:",
+  "chuKyCuoiGiaoAn": true,
+  "trangMoiChoBaiDau": true,
+  "chuanHoaNoiDung": true,
+  "boTongKetTuan": true,
+  "bangRongToanTrang": true,
+  "anhRongToiDaCm": 0,
+
+  "_ghiChuCanhBao": "Sau khi dán bài, dòng nào bắt đầu bằng các mẫu dưới đây sẽ được báo trong phần lưu ý (vì lẽ ra đã phải được sửa theo khung).",
+  "tuKhoaCanhBao": [
+    "^\\d\\.\\s*Năng lực (đặc thù|chung)",
+    "^\\d\\.\\s*Tích hợp",
+    "^II\\.\\s*CHUẨN BỊ",
+    "^(-\\s*)?Mục tiêu\\s*:",
+    "^\\*?\\s*Cách tiến hành",
+    "^(-\\s*)?((Câu hỏi dẫn|Diễn giải)\\s+)?tích hợp[^:]{0,100}:"
+  ],
+
+  "dongNganCach": "---------------------(((--------------------",
+  "kyHieuNganCach": ["2619|Segoe UI Symbol", "F026|Wingdings", "2767|Segoe UI Symbol"],
+  "chuGVBM": "Giáo viên bộ môn soạn giảng",
+
+  "thayTheGhiChu": [
+    ["Tích hợp", "TH"],
+    ["kĩ năng", "KN"]
+  ],
+
+  "thoiKhoaBieu": [
+    { "thu": "Hai", "buoi": "Sáng",  "mon": ["HDTN", "TV", "TV", "TOAN"] },
+    { "thu": "Hai", "buoi": "Chiều", "mon": ["AN", "MT", "GDTC"] },
+    { "thu": "Ba",  "buoi": "Sáng",  "mon": ["TV", "TV", "DD", "TOAN"] },
+    { "thu": "Ba",  "buoi": "Chiều", "mon": ["TOAN", "TCTV", "GDTC"] },
+    { "thu": "Tư",  "buoi": "Sáng",  "mon": ["TV", "TV", "TCTV", "TOAN"] },
+    { "thu": "Năm", "buoi": "Sáng",  "mon": ["TNXH", "TNXH", "TV", "TV"] },
+    { "thu": "Sáu", "buoi": "Sáng",  "mon": ["TV", "TV", "TOAN", "HDTN", "HDTN"] }
+  ],
+
+  "monHoc": {
+    "TOAN": {
+      "tenTKB": "Toán", "tenDayDu": "TOÁN", "tenTrongKeHoachKhoi": ["Toán"],
+      "cheDo": "soan", "thuMuc": "LỚP 2\\TOÁN 2", "mauTenFile": "TOÁN TUẦN {0}.docx",
+      "soTietTuan": 5, "kieuTieuDe": "bai"
+    },
+    "TV": {
+      "tenTKB": "Tiếng Việt", "tenDayDu": "TIẾNG VIỆT", "tenTrongKeHoachKhoi": ["Tiếng Việt"],
+      "cheDo": "soan", "thuMuc": "LỚP 2\\TIẾNG VIỆT 2", "mauTenFile": "TV TUẦN {0}.docx",
+      "soTietTuan": 10, "kieuTieuDe": "tiet",
+      "quyTacTenBai": [
+        ["^(Viết đoạn văn)", "Luyện viết đoạn: $1"],
+        ["^(Từ ngữ|Từ chỉ|MRVT|Mở rộng vốn từ)", "Luyện tập: $1"]
+      ]
+    },
+    "HDTN": {
+      "tenTKB": "HĐTN", "tenDayDu": "HOẠT ĐỘNG TRẢI NGHIỆM", "tenTrongKeHoachKhoi": ["HĐTN"],
+      "cheDo": "soan", "thuMuc": "LỚP 2\\HĐTN 2", "mauTenFile": "HĐTN TUẦN {0}.docx",
+      "soTietTuan": 3, "kieuTieuDe": "chung",
+      "tietGVBMTrongTuan": [2],
+      "quyTacTenBai": [
+        ["^Sinh hoạt dưới cờ.*$", "Sinh hoạt dưới cờ"]
+      ]
+    },
+    "TNXH": {
+      "tenTKB": "TNXH", "tenDayDu": "TỰ NHIÊN VÀ XÃ HỘI", "tenTrongKeHoachKhoi": ["TNXH"],
+      "cheDo": "soan", "thuMuc": "LỚP 2\\TNXH 2", "mauTenFile": "TNXH TUẦN {0}.docx",
+      "soTietTuan": 2, "kieuTieuDe": "giuNguyen"
+    },
+    "DD": {
+      "tenTKB": "Đạo đức", "tenDayDu": "ĐẠO ĐỨC", "tenTrongKeHoachKhoi": ["Đạo đức"],
+      "cheDo": "gvbm", "hienTenBaiTrongTKB": true, "hienTieuDe": false,
+      "thuMuc": "LỚP 2\\ĐẠO ĐỨC 2", "mauTenFile": "ĐẠO ĐỨC TUẦN {0}.docx",
+      "soTietTuan": 1, "kieuTieuDe": "chung"
+    },
+    "TCTV": {
+      "tenTKB": "TCTV", "tenDayDu": "TĂNG CƯỜNG TIẾNG VIỆT", "tenTrongKeHoachKhoi": ["TCTV"],
+      "cheDo": "tieuDe"
+    },
+    "AN": {
+      "tenTKB": "Âm nhạc", "tenDayDu": "ÂM NHẠC", "tenTrongKeHoachKhoi": ["Âm nhạc"],
+      "cheDo": "gvbm", "hienTenBaiTrongTKB": false, "hienTieuDe": false
+    },
+    "MT": {
+      "tenTKB": "Mĩ thuật", "tenDayDu": "MĨ THUẬT", "tenTrongKeHoachKhoi": ["Mĩ thuật", "Mỹ thuật"],
+      "cheDo": "gvbm", "hienTenBaiTrongTKB": false, "hienTieuDe": false
+    },
+    "GDTC": {
+      "tenTKB": "GDTC", "tenDayDu": "GIÁO DỤC THỂ CHẤT", "tenTrongKeHoachKhoi": ["GDTC", "Thể dục"],
+      "cheDo": "gvbm", "hienTenBaiTrongTKB": false, "hienTieuDe": false
+    }
+  }
+}
